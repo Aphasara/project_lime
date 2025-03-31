@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
+//import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +20,7 @@ class _RegisterUIState extends State<RegisterUI> {
   File? _imageSelected;
   String? _imageBase64Selected;
   TextEditingController _fullnameController = TextEditingController(text: "");
- 
+
   TextEditingController _usernameController = TextEditingController(text: "");
   TextEditingController _passwordController = TextEditingController(text: "");
   DateTime initDate = DateTime(1900);
@@ -101,24 +101,24 @@ class _RegisterUIState extends State<RegisterUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.green[900],
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.green[900],
         toolbarHeight: MediaQuery.of(context).size.height * 0.15,
         title: Text(
           'ลงทะเบียน',
           style: TextStyle(
-            fontSize: MediaQuery.of(context).size.height * 0.025,
+            fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: const Color.fromARGB(255, 34, 102, 36),
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: const Color.fromARGB(255, 34, 102, 36),
-            //size: MediaQuery.of(context).size.height * 0.04,
+            color: Colors.white,
+            size: MediaQuery.of(context).size.height * 0.04,
           ),
           onPressed: () {
             // กลับไปหน้าก่อนหน้า
@@ -139,17 +139,7 @@ class _RegisterUIState extends State<RegisterUI> {
             right: 20,
             top: 20,
           ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.lightBlueAccent,
-                Colors.lightGreenAccent,
-                Colors.redAccent,
-              ],
-            ),
-          ),
+          color: Colors.white,
           child: SingleChildScrollView(
             child: Center(
               child: Column(
@@ -160,7 +150,7 @@ class _RegisterUIState extends State<RegisterUI> {
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height * 0.025,
                         fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 34, 102, 36)),
+                        color: Colors.green[900]),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   CircleAvatar(
@@ -170,7 +160,7 @@ class _RegisterUIState extends State<RegisterUI> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Colors.lightGreenAccent, // สีของเส้นขอบ
+                          color: Colors.green.shade900, // สีของเส้นขอบ
                           width: 3, // ความหนาของเส้นขอบ
                         ),
                       ),
@@ -192,10 +182,10 @@ class _RegisterUIState extends State<RegisterUI> {
                               : Align(
                                   alignment: Alignment.center,
                                   child: Icon(
-                                    Icons.person_outline,
+                                    Icons.face_2,
                                     size: MediaQuery.of(context).size.height *
                                         0.1,
-                                    color: Colors.lightGreenAccent,
+                                    color: Colors.green[900],
                                   ),
                                 ),
                           Align(
@@ -204,10 +194,11 @@ class _RegisterUIState extends State<RegisterUI> {
                               width: MediaQuery.of(context).size.height * 0.06,
                               height: MediaQuery.of(context).size.height * 0.05,
                               decoration: BoxDecoration(
-                                color: Colors.green, // พื้นหลังของไอคอนกล้อง
+                                color:
+                                    Colors.green[900], // พื้นหลังของไอคอนกล้อง
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Colors.lightGreenAccent, // เส้นขอบรอบไอคอนกล้อง
+                                  color: Colors.white, // เส้นขอบรอบไอคอนกล้อง
                                   width: 2,
                                 ),
                               ),
@@ -233,7 +224,7 @@ class _RegisterUIState extends State<RegisterUI> {
                                           ),
                                         ),
                                         Divider(
-                                          color: Colors.green,
+                                          color: Colors.green[900],
                                           height: 5.0,
                                         ),
                                         ListTile(
@@ -244,7 +235,7 @@ class _RegisterUIState extends State<RegisterUI> {
                                           },
                                           leading: Icon(
                                             Icons.browse_gallery,
-                                            color: Colors.green,
+                                            color: Colors.green[900],
                                           ),
                                           title: Text(
                                             'Open Gallery...',
@@ -273,13 +264,16 @@ class _RegisterUIState extends State<RegisterUI> {
                     decoration: InputDecoration(
                       labelText: 'ชื่อ - สกุล',
                       floatingLabelStyle: TextStyle(
-                        color: const Color.fromARGB(255, 34, 102, 36)
+                        color: Colors.green[900],
+                        fontSize: 20,
                       ),
-                      hintText: "Your username",
+                      //hintText: "ชื่อ - สกุล",
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      //prefixIcon: Icon(Icons.person),
+                      //prefixIconColor: Colors.green[900],
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
@@ -287,23 +281,26 @@ class _RegisterUIState extends State<RegisterUI> {
                       ),
                     ),
                   ),
-                 
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
                       labelText: 'ชื่อผู้ใช้',
                       floatingLabelStyle: TextStyle(
-                        color: const Color.fromARGB(255, 34, 102, 36),
+                        color: Colors.green[900],
+                        fontSize: 20,
                       ),
-                      hintText: "USERNAME",
+                      //hintText: "ชื่อผู้ใช้",
+                      //prefixIcon: Icon(Icons.lock_person),
+                      //prefixIconColor: Colors.green[900],
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: const Color.fromARGB(255, 34, 102, 36)),
+                        borderSide: const BorderSide(
+                            color: const Color.fromARGB(255, 27, 94, 32)),
                       ),
                     ),
                   ),
@@ -314,16 +311,19 @@ class _RegisterUIState extends State<RegisterUI> {
                     decoration: InputDecoration(
                       labelText: 'รหัสผ่าน',
                       floatingLabelStyle: TextStyle(
-                        color: const Color.fromARGB(255, 34, 102, 36),
+                        color: Colors.green[900],
+                        fontSize: 20,
                       ),
-                      hintText: "PASSWORD",
+                      //hintText: "รหัสผ่าน",
+                      prefixIcon: Icon(Icons.lock),
+                      prefixIconColor: Colors.green[900],
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       suffixIcon: IconButton(
                         icon: Icon(
                           _passwordShow
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: const Color.fromARGB(255, 34, 102, 36),
+                          color: const Color.fromARGB(255, 27, 94, 32),
                         ),
                         onPressed: () {
                           setState(() {
@@ -337,7 +337,7 @@ class _RegisterUIState extends State<RegisterUI> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
-                            color: const Color.fromARGB(255, 34, 102, 36)),
+                            color: const Color.fromARGB(255, 27, 94, 32)),
                       ),
                     ),
                   ),
@@ -346,14 +346,13 @@ class _RegisterUIState extends State<RegisterUI> {
                     onPressed: () {
                       if (_usernameController.text.isEmpty ||
                           _passwordController.text.isEmpty ||
-                          _fullnameController.text.isEmpty ) {
+                          _fullnameController.text.isEmpty) {
                         showDialogMassage(context, 'แจ้งเตือน',
                             'กรุณาป้อนข้อมูลให้ครบทุกช่อง');
                       } else if (_imageBase64Selected == null) {
-                        showDialogMassage(context, 'แจ้งเตือน',
-                            'กรุณาเลือกรูปภาพ');
-                      } 
-                      else {
+                        showDialogMassage(
+                            context, 'แจ้งเตือน', 'กรุณาเลือกรูปภาพ');
+                      } else {
                         User user = User(
                           userFullname: _fullnameController.text,
                           userName: _usernameController.text,
@@ -365,7 +364,8 @@ class _RegisterUIState extends State<RegisterUI> {
                             if (value[0].message == "1")
                               {
                                 showDialogMassage(context, 'แจ้งเตือน',
-                                    "บันทึกข้อมูลเรียบร้อย").then((paramvalue) {
+                                        "บันทึกข้อมูลเรียบร้อย")
+                                    .then((paramvalue) {
                                   Navigator.pop(context);
                                 }),
                                 _fullnameController =
@@ -387,9 +387,9 @@ class _RegisterUIState extends State<RegisterUI> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightGreenAccent,
+                      backgroundColor: Colors.green[900],
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
                       fixedSize: Size(
                         MediaQuery.of(context).size.width * 0.80,
@@ -399,10 +399,9 @@ class _RegisterUIState extends State<RegisterUI> {
                     child: Text(
                       'ลงทะเบียน',
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height *
-                            0.02, // ขนาดฟอนต์
-                        color: const Color.fromARGB(255, 34, 102, 36),
-                        fontWeight: FontWeight.bold,
+                        fontSize: 18,// ขนาดฟอนต์
+                        color: Colors.white,
+                        //fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
