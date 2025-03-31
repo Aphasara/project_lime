@@ -1,51 +1,51 @@
 class Lime {
   String? message;
   String? limeGradeID;
-  String? aplus;
-  String? a;
-  String? bplus;
-  String? b;
-  String? cplus;
-  String? c;
-  String? d;
+  String? Aplus;
+  String? A;
+  String? Bplus;
+  String? B;
+  String? Cplus;
+  String? C;
+  String? D;
   String? limeAddDate;
 
   Lime(
       {this.message,
       this.limeGradeID,
-      this.aplus,
-      this.a,
-      this.bplus,
-      this.b,
-      this.cplus,
-      this.c,
-      this.d,
+      this.Aplus,
+      this.A,
+      this.Bplus,
+      this.B,
+      this.Cplus,
+      this.C,
+      this.D,
       this.limeAddDate});
 
   Lime.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     limeGradeID = json['limeGradeID'];
-    aplus = json['Aplus'];
-    a = json['A'];
-    bplus = json['Bplus'];
-    b = json['B'];
-    cplus = json['Cplus'];
-    c = json['C'];
-    d = json['D'];
-    limeAddDate = json['limeAddDate'];
+    Aplus = json['Aplus']?.toString();
+    A = json['A']?.toString();
+    Bplus = json['Bplus']?.toString();
+    B = json['B']?.toString();
+    Cplus = json['Cplus']?.toString();
+    C = json['C']?.toString();
+    D = json['D']?.toString();
+    limeAddDate = json['limeAddDate']?.toString();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['message'] = this.message;
     data['limeGradeID'] = this.limeGradeID;
-    data['Aplus'] = this.aplus;
-    data['A'] = this.a;
-    data['Bplus'] = this.bplus;
-    data['B'] = this.b;
-    data['Cplus'] = this.cplus;
-    data['C'] = this.c;
-    data['D'] = this.d;
+    data['Aplus'] = this.Aplus;
+    data['A'] = this.A;
+    data['Bplus'] = this.Bplus;
+    data['B'] = this.B;
+    data['Cplus'] = this.Cplus;
+    data['C'] = this.C;
+    data['D'] = this.D;
     data['limeAddDate'] = this.limeAddDate;
     return data;
   }

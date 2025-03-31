@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -348,9 +349,13 @@ class _RegisterUIState extends State<RegisterUI> {
                           _fullnameController.text.isEmpty ) {
                         showDialogMassage(context, 'แจ้งเตือน',
                             'กรุณาป้อนข้อมูลให้ครบทุกช่อง');
-                      } else {
+                      } else if (_imageBase64Selected == null) {
+                        showDialogMassage(context, 'แจ้งเตือน',
+                            'กรุณาเลือกรูปภาพ');
+                      } 
+                      else {
                         User user = User(
-                          userFullName: _fullnameController.text,
+                          userFullname: _fullnameController.text,
                           userName: _usernameController.text,
                           userPassword: _passwordController.text,
                           userImage: _imageBase64Selected,

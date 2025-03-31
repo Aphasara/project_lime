@@ -30,7 +30,7 @@ class _HomeLimeUIState extends State<HomeLimeUI> {
     
     ShowLimeByDateUI(),
     ShowAllLimeUI(),
-    Profile(),
+    UserProfile(user: widget.user),
   ];
 
   Widget build(BuildContext context) {

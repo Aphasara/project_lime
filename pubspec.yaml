@@ -38,22 +38,24 @@ dependencies:
   google_fonts: ^6.2.1
   http: ^1.2.2
   icon: ^2.2.1
+  icons_launcher: ^3.0.0
   image_picker: ^1.1.2
   intl: ^0.20.1
   introduction_screen: ^3.1.14
   syncfusion_flutter_charts: ^28.1.41
   syncfusion_flutter_datagrid: ^28.1.41
 
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icon/logo1.png"
-
 dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-
+icons_launcher:
+  image_path: "assets/images/limelogo2.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

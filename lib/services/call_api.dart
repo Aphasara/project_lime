@@ -14,7 +14,7 @@ class CallAPI {
     //คำสั่งเรียกใช้งาน api
     //print('xxxxx');
     final ResponseData = await http.post(
-      Uri.parse('${Env.baseUrl}/project_lime_api/apis/check_login_user_api.php'),
+      Uri.parse('${Env.baseUrl}/Lime/PHP/apis/check_login.php'),
       body: jsonEncode(user.toJson()),
     );
 
@@ -40,7 +40,7 @@ class CallAPI {
   static Future<List<User>> registerNewUserAPI(User user) async {
     //คำสั่งเรียกใช้งาน API ทั้งนี้พร้อมกับกำหนดตัวแปรเพื่อรับค่าที่ส่งกลับมา
     final responseData = await http.post(
-      Uri.parse('${Env.baseUrl}/project_lime_api/apis/register_newuser_api.php'),
+      Uri.parse('${Env.baseUrl}/Lime/PHP/apis/insert_new_user.php'),
       body: jsonEncode(user.toJson()),
       headers: {'Content-Type': 'application/json'},
     );
@@ -57,7 +57,7 @@ class CallAPI {
   // update user
   static Future<List<User>> updateUserAPI(User user) async {
     final responseData = await http.post(
-      Uri.parse('${Env.baseUrl}/project_lime_api/apis/update_user_api.php'),
+      Uri.parse('${Env.baseUrl}/Lime/PHP/apis/update_user_profile.php'),
       body: jsonEncode(user.toJson()),
       headers: {'Content-Type': 'application/json'},
     );
@@ -74,7 +74,7 @@ class CallAPI {
   // api ดูมะนาวทั้งหมด
   static Future<List<Lime>> getAllLime() async {
     final responseData = await http.post(
-      Uri.parse('${Env.baseUrl}/project_lime_api/apis/get_all_lime.php'),
+      Uri.parse('${Env.baseUrl}/Lime/PHP/apis/get_all_lime.php'),
       headers: {'Content-Type': 'application/json'},
     );
  
@@ -90,12 +90,12 @@ class CallAPI {
     }
   }
   // api ดูมะนาวตามวันที่เลือก
-  static Future<List<Lime>> getAllLimeByDate(String? addDate) async {
+  static Future<List<Lime>> getAllLimeByDate(String? limeAddDate) async {
     Map<String, dynamic> data = {
-      "addDate": addDate
+      "limeAddDate": limeAddDate
     };
     final responseData = await http.post(
-      Uri.parse('${Env.baseUrl}/project_lime_api/apis/get_all_lime_by_date.php'),
+      Uri.parse('${Env.baseUrl}/Lime/PHP/apis/get_lime_by_date.php'),
       body: jsonEncode(data),
       headers: {'Content-Type': 'application/json'},
     );

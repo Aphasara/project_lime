@@ -1,9 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, prefer_final_fields
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:lime_app/models/lime.dart';
 import 'package:lime_app/services/call_api.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ShowAllLimeUI extends StatefulWidget {
   const ShowAllLimeUI({super.key});
@@ -13,118 +13,31 @@ class ShowAllLimeUI extends StatefulWidget {
 }
 
 class _ShowAllLimeUIState extends State<ShowAllLimeUI> {
-  List<GridColumn> getColumns() {
-    return <GridColumn>[
-      GridColumn(
-        columnName: 'aplus',
-        label: Container(
-          child: Text(
-            'A+',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ),
-      GridColumn(
-        columnName: 'a',
-        label: Container(
-          child: Text(
-            'A',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ),
-      GridColumn(
-        columnName: 'bplus',
-        label: Container(
-          child: Text(
-            'B+',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ),
-      GridColumn(
-        columnName: 'b',
-        label: Container(
-          child: Text(
-            'B',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ),
-      GridColumn(
-        columnName: 'cplus',
-        label: Container(
-          child: Text(
-            'C+',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ),
-      GridColumn(
-        columnName: 'c',
-        label: Container(
-          child: Text(
-            'C',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ),
-      GridColumn(
-        columnName: 'd',
-        label: Container(
-          child: Text(
-            'D',
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ),
-    ];
+  Future<List<Lime>> getAllLime() async {
+    return CallAPI.getAllLime(); // ดึงข้อมูลทั้งหมดจาก API
   }
 
-  Future<ShowDataGridSource> getAllTemp() async {
-    return ShowDataGridSource(await CallAPI.getAllLime());
-  }
+  int statusClickButton = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightBlueAccent,
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
-        title: Text('Home'),
+        title: Text('Show Total Lime Grades'),
         titleTextStyle: TextStyle(
           color: const Color.fromARGB(255, 5, 70, 7),
           fontSize: 25,
-          //fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
         bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(2.0), // ความสูงของเส้น
-        child: Container(
-          color: const Color.fromARGB(255, 5, 70, 7), // สีของเส้น
-          height: 2.0, // ความหนาของเส้น
+          preferredSize: const Size.fromHeight(2.0),
+          child: Container(
+            color: const Color.fromARGB(255, 5, 70, 7),
+            height: 2.0,
+          ),
         ),
-      ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -138,145 +51,131 @@ class _ShowAllLimeUIState extends State<ShowAllLimeUI> {
             ],
           ),
         ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.03,
-            ),
-            Text(
-              'ข้อมูลการคัดแยกมะนาวทั้งหมด',
-              style: TextStyle(
-                // fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height * 0.025,
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                ),
-                child: FutureBuilder(
-                  future: CallAPI.getAllLime(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    return snapshot.hasData
-                        ? SfDataGrid(
-                            source: snapshot.data,
-                            columns: getColumns(),
-                            columnWidthMode: ColumnWidthMode.fill,
-                            gridLinesVisibility: GridLinesVisibility.both,
-                            headerGridLinesVisibility: GridLinesVisibility.both,
-                          )
-                        : Center(
-                            child: CircularProgressIndicator(),
-                          );
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 40.0),
+              //SizedBox(height: 30.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 5.0, right: 10.0),
+                child: FutureBuilder<List<Lime>>(
+                  future: getAllLime(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData == true) {
+                      if (snapshot.data![0].message == '0') {
+                        return Text('ไม่มีข้อมูล');
+                      } else {
+                        // คำนวณผลรวมสำหรับแต่ละเกรด
+                        double totalAplus = snapshot.data!
+                            .map((lime) => double.parse(lime.Aplus ?? '0'))
+                            .reduce((a, b) => a + b);
+                        double totalA = snapshot.data!
+                            .map((lime) => double.parse(lime.A ?? '0'))
+                            .reduce((a, b) => a + b);
+                        double totalBplus = snapshot.data!
+                            .map((lime) => double.parse(lime.Bplus ?? '0'))
+                            .reduce((a, b) => a + b);
+                        double totalB = snapshot.data!
+                            .map((lime) => double.parse(lime.B ?? '0'))
+                            .reduce((a, b) => a + b);
+                        double totalCplus = snapshot.data!
+                            .map((lime) => double.parse(lime.Cplus ?? '0'))
+                            .reduce((a, b) => a + b);
+                        double totalC = snapshot.data!
+                            .map((lime) => double.parse(lime.C ?? '0'))
+                            .reduce((a, b) => a + b);
+                        double totalD = snapshot.data!
+                            .map((lime) => double.parse(lime.D ?? '0'))
+                            .reduce((a, b) => a + b);
+
+                        // เตรียมข้อมูลสำหรับกราฟ
+                        final gradeData = [
+                          _GradeData('A+', totalAplus),
+                          _GradeData('A', totalA),
+                          _GradeData('B+', totalBplus),
+                          _GradeData('B', totalB),
+                          _GradeData('C+', totalCplus),
+                          _GradeData('C', totalC),
+                          _GradeData('D', totalD),
+                        ];
+                        return SfCircularChart(
+                          title: ChartTitle(
+                            text: 'Total Lime Grades Distribution',
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                              //fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          legend: Legend(
+                            isVisible: true,
+                            overflowMode: LegendItemOverflowMode.wrap,
+                          ),
+                          series: <PieSeries<_GradeData, String>>[
+                            PieSeries<_GradeData, String>(
+                              dataSource: gradeData,
+                              xValueMapper: (_GradeData data, _) => data.grade,
+                              yValueMapper: (_GradeData data, _) => data.total,
+                              dataLabelMapper: (_GradeData data, _) =>
+                                  '${data.grade}: ${data.total.toStringAsFixed(0)}',
+                              dataLabelSettings: DataLabelSettings(
+                                isVisible: true,
+                                labelPosition: ChartDataLabelPosition.outside,
+                                textStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              explode: true,
+                              explodeIndex: 0,
+                              pointColorMapper: (_GradeData data, _) {
+                                switch (data.grade) {
+                                  case 'A+':
+                                    return Colors.green; // เปลี่ยนสีสำหรับ A+
+                                  case 'A':
+                                    return Colors.blue; // เปลี่ยนสีสำหรับ A
+                                  case 'B+':
+                                    return Colors.orange; // เปลี่ยนสีสำหรับ B+
+                                  case 'B':
+                                    return Colors.yellow; // เปลี่ยนสีสำหรับ B
+                                  case 'C+':
+                                    return Colors.red; // เปลี่ยนสีสำหรับ C+
+                                  case 'C':
+                                    return Colors.purple; // เปลี่ยนสีสำหรับ C
+                                  case 'D':
+                                    return Colors.brown; // เปลี่ยนสีสำหรับ D
+                                  default:
+                                    return Colors
+                                        .grey; // สีเริ่มต้นสำหรับกรณีอื่นๆ
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                    } else {
+                      return CircularProgressIndicator();
+                    }
                   },
                 ),
               ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-            ),
-          ],
+              Image.asset(
+                'assets/images/lime.png',
+                width: 250,
+                height: 250,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class ShowDataGridSource extends DataGridSource {
-  late List<DataGridRow> _dataGridRows;
-  late List<Lime> _dataShow;
+// คลาสสำหรับเก็บข้อมูลเกรดและยอดรวม
+class _GradeData {
+  final String grade; // ชื่อเกรด เช่น 'A+', 'A', 'B+', ...
+  final double total; // ยอดรวมของเกรด
 
-  void buildDataGridRows() {
-    _dataGridRows = _dataShow.map<DataGridRow>((dataShow) {
-      return DataGridRow(cells: [
-        DataGridCell<String>(columnName: 'aplus', value: dataShow.aplus),
-        DataGridCell<String>(columnName: 'a', value: dataShow.a),
-        DataGridCell<String>(columnName: 'bplus', value: dataShow.bplus),
-        DataGridCell<String>(columnName: 'b', value: dataShow.b),
-        DataGridCell<String>(columnName: 'cplus', value: dataShow.cplus),
-        DataGridCell<String>(columnName: 'c', value: dataShow.c),
-        DataGridCell<String>(columnName: 'd', value: dataShow.d),
-      ]);
-    }).toList(growable: false);
-  }
-
-  ShowDataGridSource(this._dataShow) {
-    buildDataGridRows();
-  }
-
-  @override
-  List<DataGridRow> get rows => _dataGridRows;
-
-  @override
-  DataGridRowAdapter buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-      color: effectiveRows.indexOf(row) % 2 == 0
-          ? Colors.greenAccent
-          : Colors.white,
-      cells: [
-        Container(
-          child: Text(
-            row.getCells()[0].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-        Container(
-          child: Text(
-            row.getCells()[1].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-        Container(
-          child: Text(
-            row.getCells()[2].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-        Container(
-          child: Text(
-            row.getCells()[3].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-        Container(
-          child: Text(
-            row.getCells()[4].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-        Container(
-          child: Text(
-            row.getCells()[5].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-        Container(
-          child: Text(
-            row.getCells()[6].value.toString(),
-            overflow: TextOverflow.ellipsis,
-          ),
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-        ),
-      ],
-    );
-  }
+  _GradeData(this.grade, this.total);
 }

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lime_app/models/user.dart';
+import 'package:lime_app/services/call_api.dart';
 import 'package:lime_app/views/register_ui.dart';
 import 'package:lime_app/views/subviews/home_lime_ui.dart';
 
@@ -19,6 +21,36 @@ class _LoginUIState extends State<LoginUI> {
   bool pwdStatus = true;
   bool openpwd = true;
 
+//สร้างตัวแปรควบคุม TesctField (อย่าลืมไปผูกกับ TextFiled)
+  TextEditingController userNameCtrl = TextEditingController(text: '');
+  TextEditingController userPasswordCtrl = TextEditingController(text: '');
+
+  showWarningMessage(context, msg) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'คำเตือน',
+          textAlign: TextAlign.center,
+        ),
+        content: Text(
+          msg,
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'ตกลง',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +102,7 @@ class _LoginUIState extends State<LoginUI> {
                     width: MediaQuery.of(context).size.width * 0.5,
                   ),
                   TextField(
+                    controller: userNameCtrl,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
@@ -86,6 +119,7 @@ class _LoginUIState extends State<LoginUI> {
                 height: MediaQuery.of(context).size.height * 0.04,
               ),
               TextField(
+                controller: userPasswordCtrl,
                 obscureText: openpwd,
                 decoration: InputDecoration(
                   prefixIcon: Icon(
@@ -113,14 +147,44 @@ class _LoginUIState extends State<LoginUI> {
               ),
               Align(
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeLimeUI(),
-                      ),
-                    );
-                  },
+                 onPressed: () {
+                            //validate หน้าจอ
+                            if (userNameCtrl.text.trim().length == 0) {
+                              showWarningMessage(
+                                  context, 'ป้อนชื่อผู้ใช้ด้วย...');
+                            } else if (userPasswordCtrl.text.trim().length ==
+                                0) {
+                              showWarningMessage(
+                                  context, 'ป้อนรหัสผ่านด้วย...');
+                            } else {
+                              //ส่งข้อมูลที่ป้อนในที่นี้คือ ชื่อผู้ใช้ รหัสผ่าน ไปที่ API
+                              //แล้วทำงานต่อไป
+                              User user = User(
+                                userName: userNameCtrl.text.trim(),
+                                userPassword: userPasswordCtrl.text.trim(),
+                              );
+                              //
+                              CallAPI.checkLoginAPI(user).then((value) => {
+                                    if (value[0].message == "1")
+                                      {
+                                        //เปิดไปหน้า home_ui
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeLimeUI(user: value[0]),
+                                          ),
+                                        ),
+                                      }
+                                    else
+                                      {
+                                        //แสดง MSG ชื่อผ฿้ใช้รหัสผ่านไม่ถ฿กต้อง
+                                        showWarningMessage(context,
+                                            'ชื่อผู้ใช้รหัสผ่านไม่ถูกต้อง')
+                                      }
+                                  });
+                            }
+                          },
                   child: Text(
                     'LOGIN',
                     style: TextStyle(color: Colors.lightGreenAccent),
@@ -167,7 +231,7 @@ class _LoginUIState extends State<LoginUI> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.15,
+                height: MediaQuery.of(context).size.height * 0.07,
               ),
             ],
           ),
