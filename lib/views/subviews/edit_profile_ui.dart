@@ -133,46 +133,46 @@ class _EditProfileUiState extends State<EditProfileUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.green[900],
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
-        title: Text('Edit profile'),
-        titleTextStyle: TextStyle(
-          color: const Color.fromARGB(255, 5, 70, 7),
-          fontSize: 25,
-        ),
         centerTitle: true,
+        backgroundColor: Colors.green[900],
+        toolbarHeight: MediaQuery.of(context).size.height * 0.15,
+        title: Text(
+          'แก้ไขโปรไฟล์',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // ลูกศรย้อนกลับ
-          color: const Color.fromARGB(255, 5, 70, 7),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: MediaQuery.of(context).size.height * 0.03,
+          ),
           onPressed: () {
-            Navigator.pop(context,widget.user); // กลับไปยังหน้าก่อนหน้า
+            // กลับไปหน้าก่อนหน้า
+            Navigator.pop(context,widget.user);
           },
         ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0),
-          child: Container(
-            color: const Color.fromARGB(255, 5, 70, 7),
-            height: 2.0,
-          ),
-        ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.lightBlueAccent,
-                  Colors.lightGreenAccent,
-                  Colors.redAccent,
-                ],
-              ),
-            ),
+      body: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+        ),
+        child: Container(
+          height: double.infinity, // ยึดพื้นที่แนวตั้งทั้งหมด
+          width: double.infinity, // ยึดพื้นที่แนวนอนทั้งหมด
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
           ),
-          SingleChildScrollView(
+          color: Colors.white,
+          child: SingleChildScrollView(
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -226,7 +226,8 @@ class _EditProfileUiState extends State<EditProfileUi> {
                                         size:
                                             MediaQuery.of(context).size.height *
                                                 0.1,
-                                        color: const Color.fromARGB(255, 5, 70, 7),
+                                        color:
+                                            const Color.fromARGB(255, 5, 70, 7),
                                       ),
                                     ),
                           Align(
@@ -292,7 +293,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: MediaQuery.of(context).size.height * 0.06,
@@ -300,8 +301,8 @@ class _EditProfileUiState extends State<EditProfileUi> {
                       controller: userFullnameCtrl,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green[900]!, width: 2.0),
+                            borderSide: BorderSide(
+                                color: Colors.green[900]!, width: 2.0),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -312,10 +313,11 @@ class _EditProfileUiState extends State<EditProfileUi> {
                           hintStyle: TextStyle(
                             //fontFamily: 'kanit',
                             fontSize: 16,
-                            color: Colors.grey,
+                            color: Colors.green[900],
                           ),
                           prefixIcon: Icon(
-                            FontAwesomeIcons.list,
+                            FontAwesomeIcons.user,
+                            color: Colors.green[900],
                           )),
                     ),
                   ),
@@ -329,8 +331,8 @@ class _EditProfileUiState extends State<EditProfileUi> {
                       controller: userNameCtrl,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green[900]!, width: 2.0),
+                            borderSide: BorderSide(
+                                color: Colors.green[900]!, width: 2.0),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -345,6 +347,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
                           ),
                           prefixIcon: Icon(
                             FontAwesomeIcons.user,
+                            color: Colors.green[900]!,
                           )),
                     ),
                   ),
@@ -375,6 +378,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
                         ),
                         prefixIcon: Icon(
                           FontAwesomeIcons.lock,
+                          color: Colors.green[900]!,
                         ),
                         suffixIcon: IconButton(
                           onPressed: () {
@@ -386,6 +390,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
                           icon: Icon(pwdStatus1 == true
                               ? Icons.visibility_off
                               : Icons.visibility),
+                          color: Colors.green[900]!,
                         ),
                       ),
                     ),
@@ -412,11 +417,12 @@ class _EditProfileUiState extends State<EditProfileUi> {
                         hintText: 'confirm password',
                         hintStyle: TextStyle(
                           //fontFamily: 'kanit',
-                          fontSize: 15,
-                          color: Colors.grey,
+                          fontSize: 16,
+                          color: Colors.green[900]!,
                         ),
                         prefixIcon: Icon(
-                          FontAwesomeIcons.key,
+                          FontAwesomeIcons.lock,
+                          color: Colors.green[900]!,
                         ),
                         suffixIcon: IconButton(
                           onPressed: () {
@@ -428,6 +434,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
                           icon: Icon(pwdStatus2 == true
                               ? Icons.visibility_off
                               : Icons.visibility),
+                          color: Colors.green[900]!,
                         ),
                       ),
                     ),
@@ -485,7 +492,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
                           style: TextStyle(
                               //fontFamily: 'kanit',
                               fontSize: 16,
-                              color: Colors.green[900]!,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold),
                         )
                       ],
@@ -494,7 +501,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
-                      backgroundColor: Colors.lightGreenAccent,
+                      backgroundColor: Colors.green[900],
                       fixedSize: Size(
                         MediaQuery.of(context).size.width * 0.8,
                         MediaQuery.of(context).size.height * 0.06,
@@ -506,7 +513,7 @@ class _EditProfileUiState extends State<EditProfileUi> {
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

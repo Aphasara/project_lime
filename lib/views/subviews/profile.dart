@@ -22,19 +22,19 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.green[900],
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
-        title: Text('Profile'),
+        backgroundColor: Colors.green[900],
+        title: Text('โปรไฟล์'),
         titleTextStyle: TextStyle(
-          color: const Color.fromARGB(255, 5, 70, 7),
-          fontSize: 25,
+          color: Colors.white,
+          fontSize: 20,
         ),
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(2.0),
           child: Container(
-            color: const Color.fromARGB(255, 5, 70, 7),
+            color: Colors.yellowAccent,
             height: 2.0,
           ),
         ),
@@ -42,22 +42,23 @@ class _UserProfileState extends State<UserProfile> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.lightBlueAccent,
-                  Colors.lightGreenAccent,
-                  Colors.redAccent,
-                ],
-              ),
-            ),
+            color: Colors.white,
+            // decoration: BoxDecoration(
+            //   gradient: LinearGradient(
+            //     begin: Alignment.topCenter,
+            //     end: Alignment.bottomCenter,
+            //     colors: [
+            //       Colors.lightBlueAccent,
+            //       Colors.lightGreenAccent,
+            //       Colors.redAccent,
+            //     ],
+            //   ),
+            // ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
+                  height: MediaQuery.of(context).size.height * 0.08,
                 ),
                 Stack(children: [
                   CircleAvatar(
@@ -101,37 +102,39 @@ class _UserProfileState extends State<UserProfile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Name: ${widget.user!.userName}',
+                      'ชื่อ - สกุล : ${widget.user!.userFullname}',
                       style: TextStyle(
                         fontSize: 20, // ขนาดฟอนต์ที่ต้องการ
-                        //fontWeight: FontWeight.bold, // เพิ่มน้ำหนักตัวอักษร
-                        color: Colors.black, // สีตัวอักษร
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[900],
                       ),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,),
                     Text(
-                      'User: ${widget.user!.userFullname}',
+                      'ชื่อผู้ใช้ : ${widget.user!.userName}',
                       style: TextStyle(
                         fontSize: 20, // ขนาดฟอนต์ที่ต้องการ
-                        //fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        fontWeight: FontWeight.bold, // เพิ่มน้ำหนักตัวอักษร
+                        color: Colors.green[900], // สีตัวอักษร
                       ),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.width * 0.20,
                   width: MediaQuery.of(context).size.width * 1.0,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
+                  height: 0.0001,
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.green,
+                      Colors.green.shade900,
                     ),
                     fixedSize: MaterialStateProperty.all<Size>(
-                      Size(150, 50),
+                      Size(170, 50),
                     ),
                   ),
                   onPressed: () {
@@ -149,9 +152,10 @@ class _UserProfileState extends State<UserProfile> {
                       });
                     });
                   },
-                  child: Text('Edit Profile',
+                  child: Text('แก้ไขโปรไฟล์',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
+                          color: Colors.white, fontWeight: FontWeight.bold,
+                          fontSize: 16)),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -162,7 +166,7 @@ class _UserProfileState extends State<UserProfile> {
                       Colors.red,
                     ),
                     fixedSize: MaterialStateProperty.all<Size>(
-                      Size(150, 50),
+                      Size(170, 50),
                     ),
                   ),
                   onPressed: () {
@@ -171,9 +175,10 @@ class _UserProfileState extends State<UserProfile> {
                           MaterialPageRoute(builder: (context) => LoginUI()));
                     });
                   },
-                  child: Text('Logout',
+                  child: Text('ออกจากระบบ',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
+                          color: Colors.white, fontWeight: FontWeight.bold,
+                          fontSize: 16)),
                 ),
               ],
             ),

@@ -37,14 +37,15 @@ class _HomeLimeUIState extends State<HomeLimeUI> {
     return Scaffold(
       body: _currentShow[_currentIndex],
       bottomNavigationBar: ConvexAppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.green[900],
         height: 50,
         activeColor: Colors.yellowAccent,
+        color: Colors.white,
         curveSize: 100,
         items: [
-          TabItem(icon: Icons.calendar_month, title: 'Date'),
-          TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.person, title: 'Profile'),
+          TabItem(icon: Icons.calendar_month, title: 'เลืกวันที่'),
+          TabItem(icon: Icons.home, title: 'หน้าหลัก'),
+          TabItem(icon: Icons.person, title: 'โปรไฟล์'),
         ],
         initialActiveIndex: _currentIndex,
         onTap: (value) {

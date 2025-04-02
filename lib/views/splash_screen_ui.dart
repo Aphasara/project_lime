@@ -64,14 +64,14 @@ class _SplashScreenUIState extends State<SplashScreenUI> {
                 height: MediaQuery.of(context).size.height * 0.025,
               ),
               Text(
-                'Computer Engineering',
+                'วิศวกรรมคอมพิวเตอร์',
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.height * 0.025,
                   color: const Color.fromARGB(255, 22, 99, 24),
                 ),
               ),
               Text(
-                'Southeast Asia University',
+                'มหาวิทยาลัยเอเชียอาคเนย์',
                 style: TextStyle(
                   fontSize: MediaQuery.of(context).size.height * 0.025,
                   color: const Color.fromARGB(255, 22, 99, 24),

@@ -22,39 +22,40 @@ class _ShowAllLimeUIState extends State<ShowAllLimeUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Colors.green[900],
       appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent,
-        title: Text('Show Total Lime Grades'),
+        backgroundColor: Colors.green[900],
+        title: Text('โชว์จำนวนมะนาวที่คัดแยกทั้งหมด'),
         titleTextStyle: TextStyle(
-          color: const Color.fromARGB(255, 5, 70, 7),
-          fontSize: 25,
+          color: Colors.white,
+          fontSize: 20,
         ),
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(2.0),
           child: Container(
-            color: const Color.fromARGB(255, 5, 70, 7),
+            color: Colors.yellowAccent,
             height: 2.0,
           ),
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.lightBlueAccent,
-              Colors.lightGreenAccent,
-              Colors.redAccent,
-            ],
-          ),
-        ),
+        color: Colors.white,
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [
+        //       // Colors.lightBlueAccent,
+        //       // Colors.lightGreenAccent,
+        //       // Colors.redAccent,
+        //     ],
+        //   ),
+        // ),
         child: Center(
           child: Column(
             children: [
-              SizedBox(height: 40.0),
+              SizedBox(height: 50.0),
               //SizedBox(height: 30.0),
               Padding(
                 padding: const EdgeInsets.only(left: 5.0, right: 10.0),
@@ -100,11 +101,11 @@ class _ShowAllLimeUIState extends State<ShowAllLimeUI> {
                         ];
                         return SfCircularChart(
                           title: ChartTitle(
-                            text: 'Total Lime Grades Distribution',
+                            text: 'จำนวนมะนาวทั้งหมด',
                             textStyle: TextStyle(
                               fontSize: 20,
-                              //fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green[900],
                             ),
                           ),
                           legend: Legend(
@@ -121,9 +122,11 @@ class _ShowAllLimeUIState extends State<ShowAllLimeUI> {
                               dataLabelSettings: DataLabelSettings(
                                 isVisible: true,
                                 labelPosition: ChartDataLabelPosition.outside,
+                                connectorLineSettings: ConnectorLineSettings(
+                                  length: '10%',type: ConnectorType.curve,width: 1,),
                                 textStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                                  color: Colors.green[900],
+                                  fontSize: 18,
                                 ),
                               ),
                               explode: true,
@@ -163,6 +166,8 @@ class _ShowAllLimeUIState extends State<ShowAllLimeUI> {
                 'assets/images/lime.png',
                 width: 250,
                 height: 250,
+                // ให้รูปจางลง
+                opacity: AlwaysStoppedAnimation<double>(0.7),
               ),
             ],
           ),
